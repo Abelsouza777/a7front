@@ -1,108 +1,29 @@
-import { useContext, FormEvent, useState } from 'react'
 
-import Head from 'next/head'
-import Image from 'next/image';
-import styles from '../styles/home.module.scss';
-
-import logoImg from '../public/logo.svg';
-
-import { Input } from '../components/ui/Input'
-import { Button } from '@/components/ui/Button'
-import { toast } from 'react-toastify'									  
-
-import { AuthContext } from '../contexts/AuthContext'
-
+// pages/index.tsx
 import Link from 'next/link';
-
-import { canSSRGuest } from '../utils/canSSRGuest'												  
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export default function Home() {
- const { signIn } = useContext(AuthContext)
-
-	const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('');
-
-  const [loading, setLoading] = useState(false);									
-			
-  async function handleLogin(event: FormEvent){
-    event.preventDefault();
-
-    if(email===''|| password===''){
-      toast.error("Preencha os campos")
-      return;
-    }
-
-    setLoading(true);
-
-    let data = {
-      email,
-      password
-    }
-
-    await signIn(data)
-
-    setLoading(false);
-  }		
-    
   return (
-    <>
-    <Head>
-      <title>AAS  - Faça seu login</title> 
-    </Head>
-    <div className={styles.containerCenter}>
-      <Image src={logoImg} alt="Logo Sujeito Pizzaria" />
+    <div className="grid grid-rows-2 h-screen bg-blue-900 text-white">
+      {/* Primeira metade da tela (EM CONSTRUÇÃO) */}
+      <div className="flex items-center justify-center">
+        <h1 className="text-4xl font-bold">EM CONSTRUÇÃO</h1>
+      </div>
 
-      <div className={styles.login}>
-  <form onSubmit={handleLogin}>
-    <Input
-      placeholder="Digite seu email"
-      type="text"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
-
-    <Input
-      placeholder="Sua senha"
-      type="password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
-
-				
-								   
-						   
-							
-														   
-			
-		  
-    <Button
-      type="submit"
-      loading={loading}
-    >
-      Acessar
-    </Button>
-			   
-
-    <Link href="/signup">
-  <span className={styles.text}>Não possui uma conta? Cadastre-se</span>
-</Link>
-
-  </form>
-</div>
+      {/* Segunda metade da tela (Entre em contato + ícone WhatsApp) */}
+      <div className="flex flex-col items-center justify-center">
+        <p className="text-lg mb-4">Entre em contato</p>
+        <Link
+          href="https://wa.me/514599739513"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col items-center"
+        >
+          {/* Ícone do WhatsApp do Bootstrap Icons */}
+          <i className="bi bi-whatsapp text-green-500 text-6xl md:text-4xl" aria-label="Entre em contato pelo WhatsApp"></i>
+        </Link>
+      </div>
     </div>
-    </>
-  )
+  );
 }
-
-
-export const getServerSideProps = canSSRGuest(async (ctx) => {
-  
-  return {
-    props: {}
-  }
-})															  
-  
-		  
-			 
-   
-  
